@@ -13,7 +13,7 @@ provider "google" {
     zone    = "europe-west9-a"
 }
 
-resource "google_compute_network" "mon_vpc" {
+resource "google_compute_network" "projet VM"{
     project                 = "my-project-name"
     name                    = "mon-vpc-terraform"
     auto_create_subnetworks = true
