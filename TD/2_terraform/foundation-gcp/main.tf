@@ -1,22 +1,24 @@
-terraform {
-    required_providers {
-        google = {
-        	source  = "hashicorp/google"
-        	version = "~> 5.0"
+provider "google" {
+    project = "projet-de-fou"
+    region  = "europe-west9"
+}
+
+resource "google_compute_network" "project-network" {
+    name = "project-network"
+}
+
+resource "google_compute_instance" "project-vm" {
+    name                 = "project-vm"
+    machine_type            = "n2-standard-2"
+    zone                    = "europe-west9-b"
+    boot_disk {
+        initialize_params {
+            image = "debian-cloud/debian-13"
         }
     }
-}
-
-provider "google" {
-    project = "id-projet-gcp"
-    region  = "europe-west9"
-    zone    = "europe-west9-a"
-}
-
-resource "google_compute_network" "projet VM"{
-    project                 = "my-project-name"
-    name                    = "mon-vpc-terraform"
-    auto_create_subnetworks = true
-    description             = "VPC initialisé !"
-    mtu                     = 1460
+    network_interface {
+        network = google_compute_network.project-network.self_link
+        access_config {
+        }
+    }
 }
