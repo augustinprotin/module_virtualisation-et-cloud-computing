@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  myredis:
+    image: redis:latest
+    container_name: myredis               # comme dans ta commande
+    ports:
+      - "6379:6379"                       # équivalent à -p 6379:6379
+    restart: "no"                         # équivalent à --rm (ne redémarre pas)
+    command: ["redis-server"]             # par défaut, identique à ta commande
